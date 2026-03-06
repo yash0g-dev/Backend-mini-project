@@ -14,7 +14,7 @@ const createmusic = async (req, res) => {
 }  
      const existingMusic = await musicmodel.findOne({
   Title:title,
-  artist: decode.id
+  artist: req.user.id
 });
 if (existingMusic) {
   return res.status(409).json({
@@ -26,7 +26,7 @@ if (existingMusic) {
     console.log("Here The Resultf:", resultf);
 
     const music = await musicmodel.create({
-      uri: resultf.uri,
+      uri: resultf.url,
       title,
       artist: req.user.id,
     });
@@ -64,8 +64,8 @@ const createAlbum=async (req,res) => {
   };
   
   const GetMusic=async (req,res) => {
-    // const music=await musicmodel.find().populate("artist","Username Email")
-    const music=await musicmodel.find().populate("artist")
+    const music=await musicmodel.find().populate("artist","Username Email role")
+    // const music=await musicmodel.find().populate("artist ")
     res.status(200).json({
       message:"Here The Music Fetch Successfullly",
       music:music
