@@ -17,6 +17,10 @@ const Browse = () => {
 const [currentTime, setCurrentTime] = useState(0);
 const [duration, setDuration] = useState(0);
 
+// Track progress state
+const [currentTime, setCurrentTime] = useState(0);
+const [duration, setDuration] = useState(0);
+
   // Audio player state
   const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
   const audioRef = useRef(new Audio());
@@ -75,6 +79,8 @@ const [duration, setDuration] = useState(0);
         setState((prev) => ({...prev,mode:"pause"}))
       }
       else {audio.play().catch(() => {}); setState((prev) => ({...prev,mode:"play"}));}
+      if (!audio.paused) audio.pause();
+      else audio.play().catch(() => {});
     } else {
       audio.src = allMusic[index].uri;
       audio.play().catch(() => {});
@@ -89,6 +95,16 @@ const [duration, setDuration] = useState(0);
     audioRef.current.src = allMusic[nextIndex].uri;
     audioRef.current.play().catch(() => {});
     setCurrentTrackIndex(nextIndex);
+  };
+
+  // Play previous track
+  const handlePrev = () => {
+    if (currentTrackIndex === null || allMusic.length === 0) return;
+    const prevIndex =
+      (currentTrackIndex - 1 + allMusic.length) % allMusic.length;
+    audioRef.current.src = allMusic[prevIndex].uri;
+    audioRef.current.play().catch(() => {});
+    setCurrentTrackIndex(prevIndex);
   };
 
   // Play previous track
@@ -147,6 +163,7 @@ useEffect(() => {
 
         {/* Music Grid */}
         <section
+        <section>
           <SectionHeader title="All Music" />
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {allMusic.map((track, i) => (
@@ -178,6 +195,11 @@ useEffect(() => {
         currentTrack={currentTrackIndex !== null ? allMusic[currentTrackIndex] : null}
         onPlayPause={handlePlay}
         state={state}
+        onPlayPause={() => {
+          const audio = audioRef.current;
+          if (!audio.paused) audio.pause();
+          else audio.play().catch(() => {});
+        }}
         onNext={handleNext}
         onPrev={handlePrev}
     currentTime={currentTime}
