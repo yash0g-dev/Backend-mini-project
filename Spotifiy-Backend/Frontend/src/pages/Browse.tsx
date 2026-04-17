@@ -14,12 +14,12 @@ const Browse = () => {
   const [state , setState] = useState({state:"pause",index:0});
   const [volume , setVolume] = useState(100);
 // Track progress state
-const [currentTime, setCurrentTime] = useState(0);
-const [duration, setDuration] = useState(0);
+// const [currentTime, setCurrentTime] = useState(0);
+// const [duration, setDuration] = useState(0);
 
-// Track progress state
-const [currentTime, setCurrentTime] = useState(0);
-const [duration, setDuration] = useState(0);
+// // Track progress state
+// const [currentTime, setCurrentTime] = useState(0);
+// const [duration, setDuration] = useState(0);
 
   // Audio player state
   const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
@@ -98,14 +98,14 @@ const [duration, setDuration] = useState(0);
   };
 
   // Play previous track
-  const handlePrev = () => {
-    if (currentTrackIndex === null || allMusic.length === 0) return;
-    const prevIndex =
-      (currentTrackIndex - 1 + allMusic.length) % allMusic.length;
-    audioRef.current.src = allMusic[prevIndex].uri;
-    audioRef.current.play().catch(() => {});
-    setCurrentTrackIndex(prevIndex);
-  };
+  // const handlePrev = () => {
+  //   if (currentTrackIndex === null || allMusic.length === 0) return;
+  //   const prevIndex =
+  //     (currentTrackIndex - 1 + allMusic.length) % allMusic.length;
+  //   audioRef.current.src = allMusic[prevIndex].uri;
+  //   audioRef.current.play().catch(() => {});
+  //   setCurrentTrackIndex(prevIndex);
+  // };
 
   // Play previous track
   const handlePrev = () => {
